@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <div class="container">
     
-        <h1>WHEAT TO DO</h1>
+        <h1>WHEAT TODO LIST</h1>
     
-    <form id="regForm">
-        <input type="text" id="todo-input">
-        <button type="button" id="btn">ADD TODO</button>
+    <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Enter your todo">
+        <button type="submit" id="todo-button"><i class="fas fa-plus-square"></i></button>
         <p id="errorMessage" class="error-message"></p>
     </form>
 
-    <ul id="out">
-
-    </ul>
+    <div class="todo-container">
+        <ul id="todo-list"></ul>
+        <p id="errorMessage" style="color: red;"></p>
+    </div>
 </div>
     <script src="./script.js"></script>
 </body>
