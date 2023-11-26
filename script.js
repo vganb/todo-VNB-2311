@@ -16,7 +16,7 @@ const getTodos = async () => {
         }
 
         const todos = await res.json();
-        
+        displayData(todos);
 
 
 
@@ -25,7 +25,17 @@ const getTodos = async () => {
     }
 };
 
-console.log(todoInput)
+function displayData(todos) {
+    todoList.innerHTML = ''
+
+    todos.forEach(todo => {
+        let newListElement = document.createElement('li')
+        newListElement.textContent = todo.title
+        todoList.appendChild(newListElement)
+    })
+}
+
+// console.log(todoInput)
 
 todoForm.addEventListener('submit', async (event) =>{
     event.preventDefault()
@@ -44,32 +54,33 @@ todoForm.addEventListener('submit', async (event) =>{
     const data = await response.json()
     console.log(data)
 
-    createNewTodoElement()
-
-
+    // createNewTodoElement()
+    
+    
 })
+// getTodos();
 
-function createNewTodoElement() {
-let newListElement = document.createElement('li')
+// function createNewTodoElement() {
+// let newListElement = document.createElement('li')
+// // console.log(newListElement)
+
+// newListElement.textContent = todoInput.value
+
+// todoList.appendChild(newListElement)
 // console.log(newListElement)
+// } 
 
-newListElement.textContent = todoInput.value
-
-todoList.appendChild(newListElement)
-console.log(newListElement)
-} 
-
-
+getTodos()
 
 // DELETE
 
     
-    // const deleteResponse = await fetch(API_URL, {
-    //     method:'DELETE',
-    // });
+//     const deleteResponse = await fetch(API_URL, {
+//         method:'DELETE',
+//     });
     
-    // if (deleteResponse.status !== 200) {
-    //     // console.log('Unable to delete todo')
-    //     console.log(deleteResponse)
-    // }
+//     if (deleteResponse.status !== 200) {
+//         // console.log('Unable to delete todo')
+//         console.log(deleteResponse)
+//     }
     

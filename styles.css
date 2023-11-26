@@ -63,3 +63,17 @@ form input, form button {
     border-radius: 1rem;
     
 }
+
+li{
+    font-size: 1.2rem;
+    text-align: center;
+    min-width:250px;
+    list-style: none;
+    padding: .7rem;
+    border: .1px solid #00000051;
+    border-radius: 1rem;
+    background-color: #b27400;
+    margin: 1.4rem;
+    /* color: black; */
+
+}
