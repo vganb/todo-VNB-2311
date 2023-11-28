@@ -1,7 +1,6 @@
 const API_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070'
 const todoList = document.querySelector('#todo-list')
 const todoInput = document.querySelector('#todo-input')
-// const todoBtn = document.querySelector('#todo-button')
 const errorMessage = document.querySelector('#errorMessage')
 const todoForm = document.querySelector('#todo-form')
 
@@ -9,30 +8,57 @@ const getTodoListArray = []
 
 const getTodos = async () => {
     try{
-        const res = await fetch(API_URL)
-        if(res.status !== 200 ){
+        const response = await fetch(API_URL)
+        if(response.status !== 200 ){
             console.log(res)
             throw new Error('Unable to fetch todos')
         }
 
-        const todos = await res.json();
+        const todos = await response.json();
         displayData(todos);
 
 
-
+        
     } catch (error) {
-    console.error(error.message)
+        console.error(error.message)
     }
 };
 
 function displayData(todos) {
     todoList.innerHTML = ''
-
+    
     todos.forEach(todo => {
         let newListElement = document.createElement('li')
         newListElement.textContent = todo.title
+
+        let iconSpan = document.createElement('span')
+        iconSpan.innerHTML = '<i class="fa-solid fa-trash"></i>';
+
+        let deleteButton = document.createElement('button');
+        deleteButton.appendChild(iconSpan)
+        deleteButton.addEventListener('click', async () => {
+            await deleteTodoItem(todo._id)
+        })
+        
+        newListElement.appendChild(deleteButton)
         todoList.appendChild(newListElement)
     })
+
+    async function deleteTodoItem(id){
+        const deleteURL = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070`
+        const deleteResponse = await fetch(deleteURL, {
+            method: 'DELETE',
+        })
+        
+        if(deleteResponse.status !== 200) {
+            console.log('Unable to delete todo')
+            return
+        }
+        
+        const todos = await deleteResponse.json()
+        console.log(todos)
+    }
+    getTodos()
 }
 
 // console.log(todoInput)
@@ -51,36 +77,12 @@ todoForm.addEventListener('submit', async (event) =>{
         return
     }
 
+    todoInput.value = ''
+
     const data = await response.json()
     console.log(data)
-
-    // createNewTodoElement()
-    
-    
 })
-// getTodos();
 
-// function createNewTodoElement() {
-// let newListElement = document.createElement('li')
-// // console.log(newListElement)
 
-// newListElement.textContent = todoInput.value
-
-// todoList.appendChild(newListElement)
-// console.log(newListElement)
-// } 
 
 getTodos()
-
-// DELETE
-
-    
-//     const deleteResponse = await fetch(API_URL, {
-//         method:'DELETE',
-//     });
-    
-//     if (deleteResponse.status !== 200) {
-//         // console.log('Unable to delete todo')
-//         console.log(deleteResponse)
-//     }
-    
