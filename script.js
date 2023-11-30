@@ -6,6 +6,7 @@ const todoForm = document.querySelector('#todo-form')
 
 const getTodoListArray = []
 
+// GET
 const getTodos = async () => {
     try{
         const response = await fetch(API_URL)
@@ -24,6 +25,7 @@ const getTodos = async () => {
     }
 };
 
+// DISPLAY DATA FROM API
 function displayData(todos) {
     todoList.innerHTML = ''
     
@@ -44,6 +46,7 @@ function displayData(todos) {
         todoList.appendChild(newListElement)
     })
 
+    // DELETE
     async function deleteTodoItem(id){
         const deleteURL = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070`
         const deleteResponse = await fetch(deleteURL, {
@@ -63,9 +66,44 @@ function displayData(todos) {
 
 // console.log(todoInput)
 
+// FUNCTION TO VALIDATE INPUT
+function validateInput(input) {
+const parent = input.parentElement
+// const errorMessage = parent.querySelector('.error-message')
+
+if(input.value.trim() === ''){
+    parent.classList.add('invalid')
+    errorMessage.innerHTML = 'This field cannot be empty'
+    return false
+
+} else if (input.value.trim().length < 3) {
+    parent.classList.add('invalid')
+    errorMessage.innerHTML = 'The todo must be at least 3 characters long'
+    return false
+} else {
+    parent.classList.remove('invalid')
+    errorMessage.innerHTML = ''
+    return true
+    }
+}
+
+function updateErrorMessage(message) {
+    errorMessage.innerHTML = message
+}
+
+// POST
 todoForm.addEventListener('submit', async (event) =>{
     event.preventDefault()
 
+    // VALIDATE INPUT BEFORE API REQUEST
+    if(!validateInput(todoInput)){
+        return
+    }
+
+    todoInput.disabled = true
+    todoForm.querySelector('button[type="submit"]').disabled = true
+
+    try{
     const response = await fetch(API_URL, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
@@ -81,8 +119,12 @@ todoForm.addEventListener('submit', async (event) =>{
 
     const data = await response.json()
     console.log(data)
+
+    getTodos()
+    } finally{
+    todoInput.disabled = false
+    todoForm.querySelector('button[type="submit"]').disabled = false
+    }
 })
-
-
 
 getTodos()

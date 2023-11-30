@@ -32,6 +32,7 @@ h1 {
     padding: .2rem;
     border: 0;
     width: 100%;
+    background-color: #fff;
 }
 
 #todo-button {
@@ -65,7 +66,7 @@ form input, form button {
 }
 
 li{
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: center;
     min-width:250px;
     list-style: none;
@@ -76,4 +77,16 @@ li{
     margin: 1.4rem;
     /* color: black; */
 
+}
+
+
+
+.error-message {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: .5rem;
+}
+
+.invalid {
+    border: 2px solid red;
 }
