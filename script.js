@@ -1,4 +1,6 @@
 const API_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070'
+
+// HTML Selectors
 const todoList = document.querySelector('#todo-list')
 const todoInput = document.querySelector('#todo-input')
 const errorMessage = document.querySelector('#errorMessage')
@@ -6,7 +8,7 @@ const todoForm = document.querySelector('#todo-form')
 
 const getTodoListArray = []
 
-// GET
+// GET todos from api
 const getTodos = async () => {
     try{
         const response = await fetch(API_URL)
@@ -16,6 +18,8 @@ const getTodos = async () => {
         }
 
         const todos = await response.json();
+        
+        // DISPLAY fetched todos 
         displayData(todos);
 
 
@@ -46,7 +50,7 @@ function displayData(todos) {
         todoList.appendChild(newListElement)
     })
 
-    // DELETE
+    // DELETE todo item from the api
     async function deleteTodoItem(id){
         const deleteURL = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070`
         const deleteResponse = await fetch(deleteURL, {
@@ -61,15 +65,16 @@ function displayData(todos) {
         const todos = await deleteResponse.json()
         console.log(todos)
     }
+    
     getTodos()
 }
 
-// console.log(todoInput)
+
 
 // FUNCTION TO VALIDATE INPUT
 function validateInput(input) {
 const parent = input.parentElement
-// const errorMessage = parent.querySelector('.error-message')
+
 
 if(input.value.trim() === ''){
     parent.classList.add('invalid')
@@ -86,23 +91,23 @@ if(input.value.trim() === ''){
     return true
     }
 }
-
+// Update the error message
 function updateErrorMessage(message) {
     errorMessage.innerHTML = message
 }
 
-// POST
 todoForm.addEventListener('submit', async (event) =>{
     event.preventDefault()
-
+    
     // VALIDATE INPUT BEFORE API REQUEST
     if(!validateInput(todoInput)){
         return
     }
-
+    
     todoInput.disabled = true
     todoForm.querySelector('button[type="submit"]').disabled = true
-
+    
+    // POST
     try{
     const response = await fetch(API_URL, {
         method: 'POST',
