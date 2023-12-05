@@ -62,12 +62,9 @@ function displayData(todos) {
             return
         }
         
-        // const todos = await deleteResponse.json()
-        // console.log(todos)
         listElement.remove()
     }
     
-    // getTodos()
 }
 
 
