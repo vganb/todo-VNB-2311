@@ -13,7 +13,7 @@ const getTodos = async () => {
     try{
         const response = await fetch(API_URL)
         if(response.status !== 200 ){
-            console.log(res)
+            console.log(response)
             throw new Error('Unable to fetch todos')
         }
 
@@ -43,7 +43,7 @@ function displayData(todos) {
         let deleteButton = document.createElement('button');
         deleteButton.appendChild(iconSpan)
         deleteButton.addEventListener('click', async () => {
-            await deleteTodoItem(todo._id)
+            await deleteTodoItem(todo._id, newListElement)
         })
         
         newListElement.appendChild(deleteButton)
@@ -51,7 +51,7 @@ function displayData(todos) {
     })
 
     // DELETE todo item from the api
-    async function deleteTodoItem(id){
+    async function deleteTodoItem(id, listElement){
         const deleteURL = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=6beacb49-b7de-44c2-bea1-c4e55368c070`
         const deleteResponse = await fetch(deleteURL, {
             method: 'DELETE',
@@ -62,13 +62,13 @@ function displayData(todos) {
             return
         }
         
-        const todos = await deleteResponse.json()
-        console.log(todos)
+        // const todos = await deleteResponse.json()
+        // console.log(todos)
+        listElement.remove()
     }
     
-    getTodos()
+    // getTodos()
 }
-
 
 
 // FUNCTION TO VALIDATE INPUT
@@ -112,7 +112,7 @@ todoForm.addEventListener('submit', async (event) =>{
     const response = await fetch(API_URL, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({title:todoInput.value})
+        body: JSON.stringify({title:todoInput.value}),
     })
     console.log(response)
     if(response.status !== 201) {
